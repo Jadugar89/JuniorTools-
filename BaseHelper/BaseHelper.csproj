@@ -1,0 +1,43 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net6.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="workflow\**" />
+    <EmbeddedResource Remove="workflow\**" />
+    <None Remove="workflow\**" />
+    <Page Remove="workflow\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="GITSEPHORA-Workflow.trace" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="gong-wpf-dragdrop" Version="3.1.1" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.4" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.4">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.Configuration.Xml" Version="6.0.0" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="6.0.1" />
+    <PackageReference Include="Microsoft.Toolkit.Mvvm" Version="7.1.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\BaseSQL\BaseSQL.csproj" />
+    <ProjectReference Include="..\ClassMaker\ClassMaker.csproj" />
+    <ProjectReference Include="..\MakupReader\MarkupReader.csproj" />
+  </ItemGroup>
+
+</Project>

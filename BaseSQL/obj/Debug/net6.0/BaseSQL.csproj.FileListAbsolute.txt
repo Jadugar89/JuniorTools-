@@ -1,0 +1,12 @@
+C:\Users\Jadu\source\repos\JuniorTools\BaseSQL\obj\Debug\net6.0\BaseSQL.csproj.AssemblyReference.cache
+C:\Users\Jadu\source\repos\JuniorTools\BaseSQL\obj\Debug\net6.0\BaseSQL.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Jadu\source\repos\JuniorTools\BaseSQL\obj\Debug\net6.0\BaseSQL.AssemblyInfoInputs.cache
+C:\Users\Jadu\source\repos\JuniorTools\BaseSQL\obj\Debug\net6.0\BaseSQL.AssemblyInfo.cs
+C:\Users\Jadu\source\repos\JuniorTools\BaseSQL\obj\Debug\net6.0\BaseSQL.csproj.CoreCompileInputs.cache
+C:\Users\Jadu\source\repos\JuniorTools\BaseSQL\bin\Debug\net6.0\BaseSQL.deps.json
+C:\Users\Jadu\source\repos\JuniorTools\BaseSQL\bin\Debug\net6.0\BaseSQL.dll
+C:\Users\Jadu\source\repos\JuniorTools\BaseSQL\bin\Debug\net6.0\BaseSQL.pdb
+C:\Users\Jadu\source\repos\JuniorTools\BaseSQL\obj\Debug\net6.0\BaseSQL.dll
+C:\Users\Jadu\source\repos\JuniorTools\BaseSQL\obj\Debug\net6.0\refint\BaseSQL.dll
+C:\Users\Jadu\source\repos\JuniorTools\BaseSQL\obj\Debug\net6.0\BaseSQL.pdb
+C:\Users\Jadu\source\repos\JuniorTools\BaseSQL\obj\Debug\net6.0\ref\BaseSQL.dll

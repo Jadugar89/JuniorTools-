@@ -1,0 +1,12 @@
+C:\Users\Jadu\source\repos\JuniorTools\ClassMaker\obj\Debug\net6.0\ClassMaker.csproj.AssemblyReference.cache
+C:\Users\Jadu\source\repos\JuniorTools\ClassMaker\obj\Debug\net6.0\ClassMaker.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Jadu\source\repos\JuniorTools\ClassMaker\obj\Debug\net6.0\ClassMaker.AssemblyInfoInputs.cache
+C:\Users\Jadu\source\repos\JuniorTools\ClassMaker\obj\Debug\net6.0\ClassMaker.AssemblyInfo.cs
+C:\Users\Jadu\source\repos\JuniorTools\ClassMaker\obj\Debug\net6.0\ClassMaker.csproj.CoreCompileInputs.cache
+C:\Users\Jadu\source\repos\JuniorTools\ClassMaker\bin\Debug\net6.0\ClassMaker.deps.json
+C:\Users\Jadu\source\repos\JuniorTools\ClassMaker\bin\Debug\net6.0\ClassMaker.dll
+C:\Users\Jadu\source\repos\JuniorTools\ClassMaker\bin\Debug\net6.0\ClassMaker.pdb
+C:\Users\Jadu\source\repos\JuniorTools\ClassMaker\obj\Debug\net6.0\ClassMaker.dll
+C:\Users\Jadu\source\repos\JuniorTools\ClassMaker\obj\Debug\net6.0\refint\ClassMaker.dll
+C:\Users\Jadu\source\repos\JuniorTools\ClassMaker\obj\Debug\net6.0\ClassMaker.pdb
+C:\Users\Jadu\source\repos\JuniorTools\ClassMaker\obj\Debug\net6.0\ref\ClassMaker.dll

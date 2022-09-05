@@ -1,0 +1,32 @@
+﻿<Window x:Class="BaseHelper.Views.XML_Reader"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dragDrop="clr-namespace:GongSolutions.Wpf.DragDrop;assembly=GongSolutions.Wpf.DragDrop"
+        xmlns:uc="clr-namespace:BaseHelper.User_Control"
+        mc:Ignorable="d"
+        Title="XML_Reader" Height="450" Width="800">
+    <Border dragDrop:DragDrop.IsDropTarget="True"
+            dragDrop:DragDrop.DropHandler="{Binding}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="5*"/>
+            </Grid.RowDefinitions>
+            <uc:Navigation Grid.Row="0" ></uc:Navigation>
+            <StackPanel Grid.Row="1">
+            <Button Height="20" Content="Read File" Margin="10" x:Name="OpenDialog" Command="{Binding Btn_OpenDialog}"/>
+        </StackPanel>
+
+
+        <Grid Margin="5,5,5,5" Grid.Row="2" x:Name="jasiu" Height="auto" AllowDrop="True" >
+            <ScrollViewer  PanningMode="Both" Grid.Row="1" CanContentScroll="True" HorizontalScrollBarVisibility="Auto"  VerticalScrollBarVisibility="Auto">
+                   
+            </ScrollViewer>
+            </Grid>
+
+    </Grid>
+    </Border>
+</Window>
