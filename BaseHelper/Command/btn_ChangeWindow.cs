@@ -20,23 +20,7 @@ namespace BaseHelper.Command
         }
         public override void Execute(object? parameter)
         {
-            if (parameter!=null)
-            {
-
-
-                if (int.TryParse(parameter.ToString(), out int value))
-                {
-                    if (value == 1)
-                    {
-                        _navigationViewModel.CurrentView = new BaseHelperViewModel();
-
-                    }
-                    else
-                    {
-                        _navigationViewModel.CurrentView = new XmlReaderViewModel();
-                    }
-                }
-            }
+           
           
         }
 

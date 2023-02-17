@@ -8,26 +8,43 @@ using System.Runtime.CompilerServices;
 using System.Windows.Input;
 using BaseHelper.Command;
 using BaseHelper.User_Control;
+using BaseHelper.ViewModels.Factories;
+using Microsoft.Toolkit.Mvvm.Input;
+using BaseHelper.Services.Navigators;
 
 namespace BaseHelper.ViewModels
 {
 
     public class MainWindowViewModel :ViewModelBase
     {
-        private ViewModelBase _currentView;
-
-        public ViewModelBase CurentView
+        private readonly IViewModelFactory viewModelFactory;
+        private ViewModelBase currentView;
+        private ViewType currentViewType;
+        public ViewModelBase CurrentView
         {
-            get { return _currentView; }
-            set { _currentView = value; }
+            get { return currentView; }
+            set { currentView = value;
+                OnPropertyChanged(nameof(CurrentView));
+            }
+        }
+        public IRelayCommand BtnSwitchView { get; set; }
+
+        public MainWindowViewModel(IViewModelFactory viewModelFactory)
+        {
+            
+            this.viewModelFactory = viewModelFactory;
+            this.CurrentView = viewModelFactory.CreateViewModel(ViewType.BaseHelper);
+            this.currentViewType = ViewType.BaseHelper;
+            BtnSwitchView = new RelayCommand<ViewType>(SwitchView);
         }
 
-        public ViewModelBase? CurrentView { set; get; }
-
-        public MainWindowViewModel()
+        private void SwitchView(ViewType viewType)
         {
-            CurrentView = new BaseHelperViewModel();
-
+            if(currentViewType != viewType)
+            {
+                this.CurrentView = this.viewModelFactory.CreateViewModel(viewType);
+            }
+          
         }
     }
 

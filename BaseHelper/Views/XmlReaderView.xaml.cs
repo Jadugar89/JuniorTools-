@@ -24,7 +24,7 @@ namespace BaseHelper.Views
         public XmlReaderView()
         {
             InitializeComponent();
-            DataContext=new XmlReaderViewModel();   
+
         }
     }
 }

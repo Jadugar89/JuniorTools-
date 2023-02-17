@@ -21,10 +21,10 @@ namespace BaseHelper.Views
     /// </summary>
     public partial class MainWindowView : Window
     {
-        public MainWindowView()
+        public MainWindowView(object dataContext)
         {
             InitializeComponent();
-            this.DataContext = new MainWindowViewModel();
+            this.DataContext = dataContext;
         }
 
     }

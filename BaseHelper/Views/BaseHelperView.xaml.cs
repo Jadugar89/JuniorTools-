@@ -24,7 +24,6 @@ namespace BaseHelper.Views
         public BaseHelperView()
         {
             InitializeComponent();
-            DataContext = new BaseHelperViewModel();
         }
     }
 }

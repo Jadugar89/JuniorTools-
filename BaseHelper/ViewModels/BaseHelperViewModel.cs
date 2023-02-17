@@ -15,15 +15,16 @@ using Microsoft.VisualBasic;
 using ClassMaker;
 using System.Windows.Controls;
 using System.Collections.Specialized;
+using Microsoft.Extensions.Configuration;
 
 namespace BaseHelper.ViewModels
 {
     public class BaseHelperViewModel : ViewModelBase
     {
-        private string ConStirng= System.Configuration.ConfigurationManager.ConnectionStrings["MY"].ConnectionString;
+        
     
-        public ICommand? CreateDB { get; set; }
-        public ICommand? CreateTable { get ; set; }
+        public IRelayCommand? BtnCreateDB { get; set; }
+        public IRelayCommand? BtnCreateTable { get ; set; }
         private ObservableCollection<object> _tableData;
         public ObservableCollection<object> _TableData { 
             get
@@ -104,50 +105,39 @@ namespace BaseHelper.ViewModels
         }
         private object _selectedItem;
 
+
         public BaseHelperViewModel()
         {
-            _TableData = new ObservableCollection<object>();
-            var Columns = new Sql_Manager(ConStirng).GetColumnNames("Restauracje", "Dobre").ToArray();
-            ManagerClassMaker classMaker = new ManagerClassMaker();
-            Type dynType = classMaker.CreateTypeFromTable(Columns);
+            BtnCreateTable = new RelayCommand<object>(CreateTable);
+            BtnCreateDB = new RelayCommand(CreateDB);
+            /*
+             var Columns = new Sql_Manager(ConStirng).GetColumnNames("Restauracje", "Dobre").ToArray();
+             ManagerClassMaker classMaker = new ManagerClassMaker();
+             Type dynType = classMaker.CreateTypeFromTable(Columns);
 
-            var listTable = new List<object>(); 
+             var listTable = new List<object>(); 
 
-            var data = new Sql_Manager(ConStirng).ReadWholeTable("Restauracje", "Dobre").ToArray();
-            foreach (var row in data)
-            {
-                var test = classMaker.AddDatatoFields(dynType, row.ToArray());
-                listTable.Add(test);
-            }
-
-
-            CreateDB = new CreateBaseButtonCommand();
-            Sql_Manager sql_Manager = new Sql_Manager(ConStirng);
-            DBinfoCollection = sql_Manager.ReadAllDatebases().ToList();
-            //CreateTable = new CreateTableButtonCommand();
-            TableNames = new List<string>(); //(List<string>)ReadTable.ReadExistingTableINDB("master");
-            CreateTable = new RelayCommand<object>(CreateTableFunc, CanCreateTable);
-
-            //_TableData = new ObservableCollection<object>(listTable);
+             var data = new Sql_Manager(ConStirng).ReadWholeTable("Restauracje", "Dobre").ToArray();
+             foreach (var row in data)
+             {
+                 var test = classMaker.AddDatatoFields(dynType, row.ToArray());
+                 listTable.Add(test);
+             }
 
 
+             
+             Sql_Manager sql_Manager = new Sql_Manager(ConStirng);
+             DBinfoCollection = sql_Manager.ReadAllDatebases().ToList();
+             //CreateTable = new CreateTableButtonCommand();
+             TableNames = new List<string>(); //(List<string>)ReadTable.ReadExistingTableINDB("master");
+
+
+
+             //_TableData = new ObservableCollection<object>(listTable);
+
+             */
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-
-
-
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-
-        }
-
-
-        private bool CanCreateTable(object? parameter)
-        {
-          return  true;
-        }
         private void CreateTableFunc(object? parameter)
         {
             if (parameter != null)
@@ -167,7 +157,16 @@ namespace BaseHelper.ViewModels
                 }
             }
         }
+        private void CreateDB()
+        {
 
+            string name = Interaction.InputBox("Write new Base Name", "CreateBaseName");
+            if (name != null)
+            {
+                Sql_Manager sql_Manager = new Sql_Manager(ConfigurationManager.ConnectionStrings["NameOfConnectionStringInConfig"].ConnectionString);
+                sql_Manager.CreateDateBase(name);
+            }
+        }
  
         private void selectedItem_PropertyChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
