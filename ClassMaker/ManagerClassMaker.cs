@@ -15,7 +15,7 @@ namespace ClassMaker
             var aName = new AssemblyName("InternalMapperAssembly");
             var ab = AssemblyBuilder.DefineDynamicAssembly(aName, AssemblyBuilderAccess.Run);
             var mb = ab.DefineDynamicModule(aName.Name);
-            var typeBuilder = mb.DefineType("TableType", TypeAttributes.Public);
+            var typeBuilder = mb.DefineType("TableType", TypeAttributes.Public, typeof(TableBase));
 
             foreach (var field in FieldsName)
             {

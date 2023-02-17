@@ -18,7 +18,7 @@ using System.Collections.Specialized;
 
 namespace BaseHelper.ViewModels
 {
-    public class BaseHelperViewModel : INotifyPropertyChanged
+    public class BaseHelperViewModel : ViewModelBase
     {
         private string ConStirng= System.Configuration.ConfigurationManager.ConnectionStrings["MY"].ConnectionString;
     
@@ -32,21 +32,11 @@ namespace BaseHelper.ViewModels
             }
             set
             {
-
                 if (value != _tableData)
                 {
-                    if (_tableData != null)
-                    {
-                        _tableData.CollectionChanged -= OnCollectionChanged;
-                    }
-
                     _tableData = value;
-                    _tableData.CollectionChanged += OnCollectionChanged;
-
                     OnPropertyChanged("_TableData");
-                }
-                
-                
+                }             
             }
         }
 
@@ -65,7 +55,7 @@ namespace BaseHelper.ViewModels
                     TableNames = new Sql_Manager(ConStirng).ReadAllTable(_choosenDB).ToList();
                 }
                
-                OnPropertyChanged("TableNames");
+                OnPropertyChanged("ChoosenDB");
 
             }
         }
@@ -178,27 +168,7 @@ namespace BaseHelper.ViewModels
             }
         }
 
-        private void OnCollectionChanged(object sender,NotifyCollectionChangedEventArgs e)
-        {
-            //different kind of changes that may have occurred in collection
-            if (e.Action == NotifyCollectionChangedAction.Add)
-            {
-                //Sql_Manager sql_Manager = new Sql_Manager().AddRecord()
-            }
-            if (e.Action == NotifyCollectionChangedAction.Replace)
-            {
-                //your code
-            }
-            if (e.Action == NotifyCollectionChangedAction.Remove)
-            {
-                //your code
-            }
-            if (e.Action == NotifyCollectionChangedAction.Move)
-            {
-                //your code
-            }
-            
-        }
+ 
         private void selectedItem_PropertyChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             Console.WriteLine("Test");

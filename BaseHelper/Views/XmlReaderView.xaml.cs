@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -14,20 +12,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using BaseHelper.ViewModels;
 
-
-
-namespace BaseHelper.User_Control
+namespace BaseHelper.Views
 {
     /// <summary>
-    /// Logika interakcji dla klasy Navigation.xaml
+    /// Logika interakcji dla klasy XmlReaderView.xaml
     /// </summary>
-    public partial class Navigation : UserControl
+    public partial class XmlReaderView : UserControl
     {
-        public Navigation()
+        public XmlReaderView()
         {
             InitializeComponent();
-            this.DataContext = new NavigationViewModel();
+            DataContext=new XmlReaderViewModel();   
         }
     }
 }

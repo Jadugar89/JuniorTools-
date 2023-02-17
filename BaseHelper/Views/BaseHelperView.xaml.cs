@@ -1,4 +1,5 @@
-﻿using System;
+﻿using BaseHelper.ViewModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,21 +11,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BaseHelper.ViewModels;
 
 namespace BaseHelper.Views
 {
     /// <summary>
-    /// Logika interakcji dla klasy BaseHelper.xaml
+    /// Logika interakcji dla klasy BaseHelperView.xaml
     /// </summary>
-    public partial class BaseHelperView : Window
+    public partial class BaseHelperView : UserControl
     {
         public BaseHelperView()
         {
             InitializeComponent();
             DataContext = new BaseHelperViewModel();
         }
-
     }
 }

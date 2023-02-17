@@ -1,14 +1,11 @@
-﻿<Window x:Class="BaseHelper.Views.BaseHelperView"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:BaseHelper.Views" xmlns:viewmodels="clr-namespace:BaseHelper.ViewModels" 
-        xmlns:user_control="clr-namespace:BaseHelper.User_Control"
-        d:DataContext="{d:DesignInstance Type=viewmodels:BaseHelperViewModel}"
-        
-        mc:Ignorable="d"
-        Title="BaseHelperView" Height="450" Width="800" ShowInTaskbar="true">
+﻿<UserControl x:Class="BaseHelper.Views.BaseHelperView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:BaseHelper.Views"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height = "20" />
@@ -16,7 +13,6 @@
             <RowDefinition Height = "4*" />
         </Grid.RowDefinitions>
         <Grid Grid.Row="0">
-            <user_control:Navigation></user_control:Navigation>
         </Grid>
         <Grid Grid.Row="1" HorizontalAlignment="Left"  VerticalAlignment="Top" >
             <Grid.ColumnDefinitions>
@@ -33,12 +29,12 @@
             </StackPanel>
             <TextBox Grid.Column="2"  Text="{Binding ChoosenTable , UpdateSourceTrigger=PropertyChanged}" Width="150" />
             <StackPanel Grid.Column="1" Margin="10,0,10,0" HorizontalAlignment="Stretch">
-            <Label   Content="Choose DataBase"  />
-                    <ComboBox x:Name="BaseSelector" 
+                <Label   Content="Choose DataBase"  />
+                <ComboBox x:Name="BaseSelector" 
                               ItemsSource="{Binding Path=DBinfoCollection}"   
                               SelectedItem="{Binding Path=ChoosenDB }"  
                               />
-                    <ComboBox  x:Name="TableSelector"    
+                <ComboBox  x:Name="TableSelector"    
                       ItemsSource="{Binding TableNames}" 
                       SelectedItem="{Binding Path=ChoosenTable}" 
                                />
@@ -61,10 +57,6 @@
           IsTextSearchCaseSensitive="False"
           IsTextSearchEnabled="True"
           TextSearch.TextPath="Name">
-                  
-
         </DataGrid>
-
-
     </Grid>
-</Window>
+</UserControl>

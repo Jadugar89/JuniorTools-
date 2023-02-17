@@ -40,4 +40,8 @@
     <ProjectReference Include="..\MakupReader\MarkupReader.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Services\" />
+  </ItemGroup>
+
 </Project>

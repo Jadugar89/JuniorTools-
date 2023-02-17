@@ -16,7 +16,7 @@ using System.Reflection;
 
 namespace BaseHelper.ViewModels
 {
-    public class XmlReaderViewModel: INotifyPropertyChanged, IDropTarget
+    public class XmlReaderViewModel: ViewModelBase, IDropTarget
     {
         public ICommand Btn_OpenDialog { get; }
 

@@ -1,8 +1,7 @@
-﻿using System;
+﻿using BaseHelper.ViewModels;
+using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -15,19 +14,18 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-
-
-namespace BaseHelper.User_Control
+namespace BaseHelper.Views
 {
     /// <summary>
-    /// Logika interakcji dla klasy Navigation.xaml
+    /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class Navigation : UserControl
+    public partial class MainWindowView : Window
     {
-        public Navigation()
+        public MainWindowView()
         {
             InitializeComponent();
-            this.DataContext = new NavigationViewModel();
+            this.DataContext = new MainWindowViewModel();
         }
+
     }
 }
