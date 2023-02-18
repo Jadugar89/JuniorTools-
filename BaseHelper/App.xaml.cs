@@ -13,6 +13,7 @@ using BaseHelper.Views;
 using ConfigurationManager = System.Configuration.ConfigurationManager;
 using BaseHelper.ViewModels;
 using BaseHelper.ViewModels.Factories;
+using BaseHelper.Services;
 
 namespace BaseHelper
 {
@@ -34,10 +35,13 @@ namespace BaseHelper
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
-                   services.AddSingleton<BaseHelperViewModel>();
-                   services.AddSingleton<XmlReaderViewModel>();
+                    services.AddSingleton<BaseHelperViewModel>();
+                    services.AddSingleton<XmlReaderViewModel>();
                     services.AddSingleton<MainWindowViewModel>();
                     services.AddSingleton<IViewModelFactory, ViewModelFactory>();
+                    services.AddSingleton<IDataBaseService, DataBaseService>();
+                    services.AddSingleton<IMarkupReaderService, MarkupReaderService>();
+                    services.AddSingleton<ITableService, TableService>();
                     services.AddSingleton<CreateViewModel<BaseHelperViewModel>>(services => () => services.GetRequiredService<BaseHelperViewModel>());
                     services.AddSingleton<CreateViewModel<XmlReaderViewModel>>(services => () => services.GetRequiredService<XmlReaderViewModel>());
 
@@ -45,8 +49,6 @@ namespace BaseHelper
                     services.AddSingleton<MainWindowView>(s => new MainWindowView(s.GetRequiredService<MainWindowViewModel>()));
                 })
                 .Build();
-                
-
         }
 
         protected override void OnStartup(StartupEventArgs e)

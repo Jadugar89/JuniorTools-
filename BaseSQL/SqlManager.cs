@@ -9,14 +9,15 @@ using Microsoft.Win32;
 
 namespace BaseSQL
 {
-    public class Sql_Manager
+    public class SqlManager
     {
         public string connectionString { get; }
 
-        public Sql_Manager(string connectionString)
+        public SqlManager(string connectionString)
         {
             this.connectionString = connectionString;
         }
+
         public IEnumerable<string> ReadAllTable(string DbName)
         {
              return TableManager.ReadExistingTableInDB(connectionString, DbName);

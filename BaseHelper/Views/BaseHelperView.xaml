@@ -22,28 +22,37 @@
             </Grid.ColumnDefinitions>
             <StackPanel   Grid.Column="0"  Margin="10,0,10,0" HorizontalAlignment="Stretch">
                 <Label   Content="Choose DataBase"  />
-                <Button  MinWidth="100" x:Name="button" Content="CreateDB" HorizontalAlignment="Left"  ></Button>
+                <Button  MinWidth="100" Content="CreateDB"     HorizontalAlignment="Left" 
+                         Command="{Binding BtnCreateDB}"/>
                 <Button  MinWidth="100" Content="Create Table" HorizontalAlignment="Left"  
-                            Command="{Binding CreateTable}"
+                            Command="{Binding BtnCreateTable}"
                             CommandParameter ="{Binding ElementName=BaseSelector, Path=SelectedItem}"/>
             </StackPanel>
-            <TextBox Grid.Column="2"  Text="{Binding ChoosenTable , UpdateSourceTrigger=PropertyChanged}" Width="150" />
+            <TextBox Grid.Column="2"  Text="{Binding ChosenTable , UpdateSourceTrigger=PropertyChanged}" Width="150" />
             <StackPanel Grid.Column="1" Margin="10,0,10,0" HorizontalAlignment="Stretch">
                 <Label   Content="Choose DataBase"  />
                 <ComboBox x:Name="BaseSelector" 
-                              ItemsSource="{Binding Path=DBinfoCollection}"   
-                              SelectedItem="{Binding Path=ChoosenDB }"  
+                              ItemsSource="{Binding Path=DbInfoCollection}"   
+                              SelectedItem="{Binding Path=ChosenDB }"  
                               />
                 <ComboBox  x:Name="TableSelector"    
                       ItemsSource="{Binding TableNames}" 
-                      SelectedItem="{Binding Path=ChoosenTable}" 
+                      SelectedItem="{Binding Path=ChosenTable}" 
                                />
             </StackPanel>
         </Grid>
-        <DataGrid x:Name="DataGrid1" Grid.Row="2"    Margin="10,10,10,10" ItemsSource="{Binding Path=_TableData, Mode=TwoWay, 
-            UpdateSourceTrigger=PropertyChanged}" 
-            SelectedItem="{Binding SelectedItem,UpdateSourceTrigger=LostFocus}"    
-                  
+        <Grid Grid.Row="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="25"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="25"/>
+            </Grid.RowDefinitions>
+
+            <TextBox x:Name="SearchText" Text="{Binding SearchText}"></TextBox>    
+        <DataGrid x:Name="DataGrid1" Grid.Row="1" Margin="10,10,10,10" 
+                  ItemsSource="{Binding Path=TableData, Mode=TwoWay, 
+                  UpdateSourceTrigger=PropertyChanged}" 
+                  SelectedItem="{Binding SelectedItem,UpdateSourceTrigger=LostFocus}"    
                   CanUserAddRows="True" 
                   CanUserDeleteRows="True" 
                   CanUserResizeRows ="True" 
@@ -51,12 +60,13 @@
                   CanUserSortColumns="True" 
                   AutoGenerateColumns="True"
                   EnableRowVirtualization="False"
-                              EnableColumnVirtualization="True"
-          VirtualizingStackPanel.IsVirtualizing="False"
-          VirtualizingStackPanel.VirtualizationMode="Standard"
-          IsTextSearchCaseSensitive="False"
-          IsTextSearchEnabled="True"
-          TextSearch.TextPath="Name">
+                  EnableColumnVirtualization="True"
+                  VirtualizingStackPanel.IsVirtualizing="False"
+                  VirtualizingStackPanel.VirtualizationMode="Standard"
+                  IsTextSearchCaseSensitive="False"
+                  IsTextSearchEnabled="True"
+                  TextSearch.TextPath="{Binding ElementName=SearchText, UpdateSourceTrigger=PropertyChanged}">
         </DataGrid>
+        </Grid>
     </Grid>
 </UserControl>

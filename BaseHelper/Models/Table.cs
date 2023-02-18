@@ -11,7 +11,8 @@ namespace BaseHelper.Models
         private string tableName;
         public List<string> row { get; set; }
         public string TableName { get { return tableName; } set { tableName = value; } }
-        public string Jasiu { get; set; }
+
+
         public TableData()
         {
             this.row = new List<string>();

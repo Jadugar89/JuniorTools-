@@ -6,11 +6,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
-using BaseHelper.Command;
-using BaseHelper.User_Control;
 using BaseHelper.ViewModels.Factories;
 using Microsoft.Toolkit.Mvvm.Input;
-using BaseHelper.Services.Navigators;
+using BaseHelper.Enum;
 
 namespace BaseHelper.ViewModels
 {
@@ -40,11 +38,11 @@ namespace BaseHelper.ViewModels
 
         private void SwitchView(ViewType viewType)
         {
-            if(currentViewType != viewType)
+            if (currentViewType != viewType)
             {
                 this.CurrentView = this.viewModelFactory.CreateViewModel(viewType);
+                this.currentViewType = viewType;
             }
-          
         }
     }
 

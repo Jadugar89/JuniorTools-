@@ -5,35 +5,36 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Controls;
-using MarkupReader;
-using BaseHelper.ViewModels.Utility;
-using System.Windows.Input;
 using Microsoft.Toolkit.Mvvm.Input;
 using GongSolutions.Wpf.DragDrop;
 using System.IO;
 using System.Windows;
-using System.Reflection;
+using BaseHelper.Services;
 
 namespace BaseHelper.ViewModels
 {
     public class XmlReaderViewModel: ViewModelBase, IDropTarget
     {
-        public ICommand Btn_OpenDialog { get; }
+        public IRelayCommand BtnOpenDialog { get; }
 
-        public XmlReaderViewModel()
+        private List<TreeViewItem> markupTreeView;
+        private readonly IMarkupReaderService markupReaderService;
+
+        public List<TreeViewItem> MarkupTreeView
         {
-
-            Btn_OpenDialog = new RelayCommand(OpenDialog);
-            var test = App.Current.Windows[0].FindName("jasiu") as Grid;
-            Label label = new Label();
-            label.Name = "DropDescription";
-            label.Content = "Drop File or Press Button to Read File ";
-            label.VerticalAlignment = VerticalAlignment.Center;
-            label.HorizontalAlignment = HorizontalAlignment.Center;
-            //test.Children.Add(label);
+            get { return markupTreeView; }
+            set { markupTreeView = value;
+                OnPropertyChanged(nameof(MarkupTreeView));
+            }
         }
 
-        public event PropertyChangedEventHandler? PropertyChanged;
+
+        public XmlReaderViewModel(IMarkupReaderService markupReaderService)
+        {
+
+            BtnOpenDialog = new RelayCommand(OpenDialog);
+            this.markupReaderService = markupReaderService;
+        }
 
         void IDropTarget.DragOver(IDropInfo dropInfo)
         {
@@ -56,8 +57,8 @@ namespace BaseHelper.ViewModels
 
             if (dropInfo.Effects == DragDropEffects.Copy)
             {
-                var Name = dragFileList.First(x => Path.GetExtension(x) == ".xml"|| Path.GetExtension(x)== ".json");
-                CreateTree(Name);
+                var name = dragFileList.First(x => Path.GetExtension(x) == ".xml"|| Path.GetExtension(x)== ".json");
+                if(name!=null) MarkupTreeView = markupReaderService.GetTreeViewItem(name).ToList();
             }
            
         }
@@ -71,34 +72,17 @@ namespace BaseHelper.ViewModels
             dialog.Filter = "XML documents (.xml)|*.xml"; // Filter files by extension
 
             // Show open file dialog box
-            bool? result = dialog.ShowDialog();
+            bool? name = dialog.ShowDialog();
 
             // Process open file dialog box results
-            if (result == true)
+            if (name == true)
             {
-                // Open document
-                CreateTree(dialog.FileName);
-               
-               
-            }
-        }
-        private void CreateTree(string filename)
-        { 
-            var aMarkups = new Markup(filename).ReadMarkupFile();
-            var test = App.Current.Windows[0].FindName("jasiu") as Grid;
 
-            
-            if (aMarkups != null && test !=null)
-            {
-                Type type = aMarkups[0].GetType();
-                var lMarkups = aMarkups.Cast<XML_Object>().ToList();
-                if (type==typeof(XML_Object))
-                {
-                    test.Children.Add(new TreeViewCreator<XML_Object>().createTree(lMarkups));
-                }
-                  
+                if (dialog.FileName != null) MarkupTreeView = markupReaderService.GetTreeViewItem(dialog.FileName).ToList();
+
+
             }
-            
         }
+       
     }
 }

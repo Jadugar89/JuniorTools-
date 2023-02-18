@@ -8,7 +8,7 @@ namespace SQLHelperTest
         [Fact]
         public void Test1()
         {
-            BaseSQL.Sql_Manager.GetDataSources();
+            BaseSQL.SqlManager.GetDataSources();
 
         }
     }

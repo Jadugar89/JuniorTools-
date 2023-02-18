@@ -6,12 +6,12 @@ using System.Threading.Tasks;
 
 namespace MarkupReader
 {
-    public class XML_Object : AbstractMarkupObject<XML_Object>
+    public class XmlObject : AbstractMarkupObject<XmlObject>
     {
         
         
         public Dictionary<string,string>? Atribute;
-        public XML_Object() : base()
+        public XmlObject() : base()
         {
 
             Atribute = new Dictionary<string,string>();

@@ -16,6 +16,8 @@ using ClassMaker;
 using System.Windows.Controls;
 using System.Collections.Specialized;
 using Microsoft.Extensions.Configuration;
+using BaseHelper.Services;
+using System.Data.Common;
 
 namespace BaseHelper.ViewModels
 {
@@ -25,135 +27,151 @@ namespace BaseHelper.ViewModels
     
         public IRelayCommand? BtnCreateDB { get; set; }
         public IRelayCommand? BtnCreateTable { get ; set; }
-        private ObservableCollection<object> _tableData;
-        public ObservableCollection<object> _TableData { 
+
+        private List<object> originalTableData;
+        private List<object> toSaveTableData;
+
+        private ObservableCollection<object> tableData;
+        public ObservableCollection<object> TableData { 
             get
             {
-                return _tableData;
+                return tableData;
             }
             set
             {
-                if (value != _tableData)
+                if (value != tableData)
                 {
-                    _tableData = value;
-                    OnPropertyChanged("_TableData");
+                    tableData = value;
+                    OnPropertyChanged(nameof(TableData));
                 }             
             }
         }
+        private string searchText;
 
-        private string? _choosenDB;
-        private string? _choosenTable;
+        public string SearchText
+        {
+            get { return searchText; }
+            set { searchText = value;
+                if (searchText != null)
+                {
+
+                }
+                OnPropertyChanged(nameof(SearchText));
+
+            }
+        }
+
+
+        private string? chosenDB;
+        private string? chosenTable;
         public event NotifyCollectionChangedEventHandler CollectionChanged;
-        public string? ChoosenDB
+        public string? ChosenDB
         {
-            get => _choosenDB;
+            get => chosenDB;
             set
             {
-                _choosenDB = value;
-                
-                if (!string.IsNullOrWhiteSpace(_choosenDB))
+                chosenDB = value;
+                if (!string.IsNullOrWhiteSpace(chosenDB))
                 {
-                    TableNames = new Sql_Manager(ConStirng).ReadAllTable(_choosenDB).ToList();
+                    TableNames = dataBaseService.ReadAllTableFromDB(chosenDB).ToList();
                 }
-               
                 OnPropertyChanged("ChoosenDB");
-
             }
         }
 
-        public string? ChoosenTable
+        public string? ChosenTable
         {
-            get => _choosenTable;
+            get => chosenTable;
             set
             {
-                _choosenTable = value;
-                if (!string.IsNullOrWhiteSpace(_choosenTable)  && _choosenDB!=null)
+                chosenTable = value;
+                if (!string.IsNullOrWhiteSpace(chosenTable) && chosenDB != null)
                 {
-                    var Columns = new Sql_Manager(ConStirng).GetColumnNames(_choosenDB, _choosenTable).ToArray();
-                    ManagerClassMaker classMaker = new ManagerClassMaker();
-                    Type dynType =classMaker.CreateTypeFromTable(Columns);
-
-                    var listTable = new List<object>(); //classMaker.CreateList(dynType);
-                    
-                    var data = new Sql_Manager(ConStirng).ReadWholeTable(_choosenDB, _choosenTable).ToArray();
-                    foreach(var row in data)
-                    {
-                       var test= classMaker.AddDatatoFields(dynType, row.ToArray());
-                        listTable.Add(test);    
-                    }
-                    _TableData = new ObservableCollection<object>(listTable);
-                    OnPropertyChanged("_TableData");
-                    
+                    var columns = dataBaseService.GetColumnNames(chosenDB, chosenTable).ToArray();
+                    var data = dataBaseService.ReadWholeTable(chosenDB, chosenTable).ToArray();
+                    TableData=tableService.GetTable(columns, data);
+                    OnPropertyChanged(nameof(ChosenTable));
                 }
             }
-
         }
-        public List<string> DBinfoCollection { get; set; }
-        public List<string> TableNames { get; set; }
+
+        private List<string> dbInfoCollection;
+
+        public List<string> DbInfoCollection
+        {
+            get { return dbInfoCollection; }
+            set { dbInfoCollection = value;
+                OnPropertyChanged(nameof(DbInfoCollection));
+            }
+        }
+
+        private List<string> tableNames;
+        public List<string> TableNames
+        {
+            get { return tableNames; }
+            set { tableNames = value;
+                OnPropertyChanged(nameof(TableNames));
+            }
+        }
+
         public object SelectedItem
         {
-            get
-            {
-                return _selectedItem;
-            }
+            get {return _selectedItem;}
             set
             {
-
                 _selectedItem = value;
                 OnPropertyChanged("selectedItem");
             }
         }
         private object _selectedItem;
+        private readonly IDataBaseService dataBaseService;
+        private readonly ITableService tableService;
 
-
-        public BaseHelperViewModel()
+        public BaseHelperViewModel(IDataBaseService dataBaseService,ITableService tableService)
         {
             BtnCreateTable = new RelayCommand<object>(CreateTable);
             BtnCreateDB = new RelayCommand(CreateDB);
+            this.dataBaseService = dataBaseService;
+            this.tableService = tableService;
+            DbInfoCollection = dataBaseService.ReadAllDatebases().ToList();
             /*
-             var Columns = new Sql_Manager(ConStirng).GetColumnNames("Restauracje", "Dobre").ToArray();
-             ManagerClassMaker classMaker = new ManagerClassMaker();
-             Type dynType = classMaker.CreateTypeFromTable(Columns);
+        var Columns = new Sql_Manager(ConStirng).GetColumnNames("Restauracje", "Dobre").ToArray();
+        ManagerClassMaker classMaker = new ManagerClassMaker();
+        Type dynType = classMaker.CreateTypeFromTable(Columns);
 
-             var listTable = new List<object>(); 
+        var listTable = new List<object>(); 
 
-             var data = new Sql_Manager(ConStirng).ReadWholeTable("Restauracje", "Dobre").ToArray();
-             foreach (var row in data)
-             {
-                 var test = classMaker.AddDatatoFields(dynType, row.ToArray());
-                 listTable.Add(test);
-             }
-
-
-             
-             Sql_Manager sql_Manager = new Sql_Manager(ConStirng);
-             DBinfoCollection = sql_Manager.ReadAllDatebases().ToList();
-             //CreateTable = new CreateTableButtonCommand();
-             TableNames = new List<string>(); //(List<string>)ReadTable.ReadExistingTableINDB("master");
-
-
-
-             //_TableData = new ObservableCollection<object>(listTable);
-
-             */
+        var data = new Sql_Manager(ConStirng).ReadWholeTable("Restauracje", "Dobre").ToArray();
+        foreach (var row in data)
+        {
+        var test = classMaker.AddDatatoFields(dynType, row.ToArray());
+        listTable.Add(test);
         }
 
-        private void CreateTableFunc(object? parameter)
+
+
+        Sql_Manager sql_Manager = new Sql_Manager(ConStirng);
+        
+        //CreateTable = new CreateTableButtonCommand();
+        TableNames = new List<string>(); //(List<string>)ReadTable.ReadExistingTableINDB("master");
+
+
+
+        //_TableData = new ObservableCollection<object>(listTable);
+
+        */
+        }
+
+        private void CreateTable(object? parameter)
         {
             if (parameter != null)
             {
-
+                var dbName = parameter.ToString();
                 string name = Interaction.InputBox("Write new Table Name", "CreateTable");
-                if (name != null)
+                if (!String.IsNullOrEmpty(dbName) && !String.IsNullOrEmpty(name))
                 {
-                    name = name.Replace(" ", "_");
-                    string stringquery = $@"CREATE TABLE {name} ( 
-                                    PersonID int,
-                                    LastName varchar(255),
-                                    FirstName varchar(255),
-                                    Address varchar(255),
-                                    City varchar(255) );";
-                    new Sql_Manager(ConStirng).CreateTable(stringquery,parameter.ToString());
+                    dataBaseService.CreateTable(name, dbName);
+                    TableNames = dataBaseService.ReadAllTableFromDB(dbName).ToList();
                 }
             }
         }
@@ -161,10 +179,10 @@ namespace BaseHelper.ViewModels
         {
 
             string name = Interaction.InputBox("Write new Base Name", "CreateBaseName");
-            if (name != null)
+            if (!String.IsNullOrEmpty(name))
             {
-                Sql_Manager sql_Manager = new Sql_Manager(ConfigurationManager.ConnectionStrings["NameOfConnectionStringInConfig"].ConnectionString);
-                sql_Manager.CreateDateBase(name);
+                dataBaseService.CreateDB(name);
+                DbInfoCollection = dataBaseService.ReadAllDatebases().ToList();
             }
         }
  

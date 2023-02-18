@@ -6,31 +6,19 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Reflection;
 
-namespace BaseHelper.ViewModels.Utility
+namespace BaseHelper.Utility
 {
-    public class TreeViewCreator<T> where T : class
+    public class TreeViewCreator 
     {
 
-        public TreeView? createTree(List<T> ts) 
-        {
-            Type type = typeof(T);
-            
-            
-            if (type.GetProperty("Name") == null) { return null; }
-
-            TreeView treeView = new TreeView();
-            treeView.ItemsSource = AddItems(ts);
-            return treeView;
-        }
-
-        private List<TreeViewItem> AddItems(IEnumerable<T> ts)
+        public List<TreeViewItem> AddItems<T>(IEnumerable<T> ts) where T : class
         {
              List<TreeViewItem> itemCollection = new List<TreeViewItem>();
             
             foreach (T t in ts)
             {
                 Type type = t.GetType();
-                string? ChildrenCollection = GetNestedField(type.GetRuntimeFields());
+                string? ChildrenCollection = GetNestedField<T>(type.GetRuntimeFields());
                 if (ChildrenCollection != null)
                 {
                    List<T> Childen= (List<T>) type.GetRuntimeField(ChildrenCollection).GetValue(t);
@@ -55,7 +43,7 @@ namespace BaseHelper.ViewModels.Utility
              ;
             return itemCollection;
         }
-        private string GetNestedField(IEnumerable<FieldInfo> fields)
+        private string GetNestedField<T>(IEnumerable<FieldInfo> fields)
         {
             foreach (FieldInfo prop in fields)
             {
@@ -77,7 +65,7 @@ namespace BaseHelper.ViewModels.Utility
             }
             return string.Empty;
         }
-        private string? GetHeader(T t)
+        private string? GetHeader<T>(T t)
         {
             string header = string.Empty;
             Type type = t.GetType();

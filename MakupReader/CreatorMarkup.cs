@@ -24,7 +24,7 @@ namespace MarkupReader
             switch (_file.Extension.ToLower())
             {
                 case ".xml":
-                    return new ArrayList(new ListCreator<XML_Object>(new XMLConverter(), 
+                    return new ArrayList(new ListCreator<XmlObject>(new XMLConverter(), 
                                          _file, new XmlConfigurationListCreator()).
                                          createMarkupObj());
                 case ".json":

@@ -1,4 +1,4 @@
-﻿using BaseHelper.Services.Navigators;
+﻿using BaseHelper.Enum;
 using BaseHelper.ViewModels;
 using System;
 using System.Collections.Generic;
