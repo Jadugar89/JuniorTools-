@@ -1,5 +1,4 @@
-﻿using BaseHelper.Models;
-using ClassMaker;
+﻿using ClassMaker;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;

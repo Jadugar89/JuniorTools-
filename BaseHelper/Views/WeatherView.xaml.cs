@@ -12,16 +12,15 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using BaseHelper.ViewModels;
 
 namespace BaseHelper.Views
 {
     /// <summary>
-    /// Logika interakcji dla klasy XmlReaderView.xaml
+    /// Logika interakcji dla klasy WheatherView.xaml
     /// </summary>
-    public partial class XmlReaderView : UserControl
+    public partial class WeatherView : UserControl
     {
-        public XmlReaderView()
+        public WeatherView()
         {
             InitializeComponent();
         }

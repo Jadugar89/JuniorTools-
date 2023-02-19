@@ -17,7 +17,6 @@ namespace BaseHelper.ViewModels
     {
         private readonly IViewModelFactory viewModelFactory;
         private ViewModelBase currentView;
-        private ViewType currentViewType;
         public ViewModelBase CurrentView
         {
             get { return currentView; }
@@ -32,17 +31,14 @@ namespace BaseHelper.ViewModels
             
             this.viewModelFactory = viewModelFactory;
             this.CurrentView = viewModelFactory.CreateViewModel(ViewType.BaseHelper);
-            this.currentViewType = ViewType.BaseHelper;
             BtnSwitchView = new RelayCommand<ViewType>(SwitchView);
         }
 
         private void SwitchView(ViewType viewType)
         {
-            if (currentViewType != viewType)
-            {
+
                 this.CurrentView = this.viewModelFactory.CreateViewModel(viewType);
-                this.currentViewType = viewType;
-            }
+            
         }
     }
 

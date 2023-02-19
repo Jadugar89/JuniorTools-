@@ -27,6 +27,15 @@ namespace BaseHelper.ViewModels
                 OnPropertyChanged(nameof(MarkupTreeView));
             }
         }
+        private bool showTree;
+
+        public bool ShowTree
+        {
+            get { return showTree; }
+            set { showTree = value;
+                OnPropertyChanged(nameof(ShowTree));
+            }
+        }
 
 
         public XmlReaderViewModel(IMarkupReaderService markupReaderService)
@@ -58,9 +67,13 @@ namespace BaseHelper.ViewModels
             if (dropInfo.Effects == DragDropEffects.Copy)
             {
                 var name = dragFileList.First(x => Path.GetExtension(x) == ".xml"|| Path.GetExtension(x)== ".json");
-                if(name!=null) MarkupTreeView = markupReaderService.GetTreeViewItem(name).ToList();
-            }
-           
+                if(name!=null)
+                {
+                    MarkupTreeView = markupReaderService.GetTreeViewItem(name).ToList();
+                    if (MarkupTreeView.Count() > 0)
+                        ShowTree = true;
+                }   
+            }    
         }
 
 
@@ -73,14 +86,15 @@ namespace BaseHelper.ViewModels
 
             // Show open file dialog box
             bool? name = dialog.ShowDialog();
-
             // Process open file dialog box results
             if (name == true)
             {
-
-                if (dialog.FileName != null) MarkupTreeView = markupReaderService.GetTreeViewItem(dialog.FileName).ToList();
-
-
+                if (dialog.FileName != null)
+                {
+                    MarkupTreeView = markupReaderService.GetTreeViewItem(dialog.FileName).ToList();
+                    if (MarkupTreeView.Count() > 0)
+                        ShowTree = true;
+                }
             }
         }
        

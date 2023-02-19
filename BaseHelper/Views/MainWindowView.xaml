@@ -12,12 +12,14 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <Menu Grid.Row="0"  IsMainMenu="True" >
-            <MenuItem Header="Funkcja">
+            <MenuItem Header="Fuctions">
                 <MenuItem Header="Base Helper" Command="{Binding BtnSwitchView}" 
                 CommandParameter="{x:Static vt:ViewType.BaseHelper}" />
                 <MenuItem Header="XML Reader"  Command="{Binding BtnSwitchView}" 
                 CommandParameter="{x:Static vt:ViewType.XmlReader}" />
             </MenuItem>
+            <MenuItem Header="Weather" Command="{Binding BtnSwitchView}" 
+                CommandParameter="{x:Static vt:ViewType.Weather}"/>
         </Menu>
 
         <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" >

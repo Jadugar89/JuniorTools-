@@ -14,6 +14,10 @@ using ConfigurationManager = System.Configuration.ConfigurationManager;
 using BaseHelper.ViewModels;
 using BaseHelper.ViewModels.Factories;
 using BaseHelper.Services;
+using NLog.Fluent;
+using Microsoft.Extensions.Logging;
+using NLog.Web;
+using BaseHelper.MapperProfile;
 
 namespace BaseHelper
 {
@@ -35,18 +39,35 @@ namespace BaseHelper
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
+                    services.AddAutoMapper(typeof(WeatherProfile));
                     services.AddSingleton<BaseHelperViewModel>();
                     services.AddSingleton<XmlReaderViewModel>();
+                    services.AddSingleton<WeatherViewModel>();
                     services.AddSingleton<MainWindowViewModel>();
-                    services.AddSingleton<IViewModelFactory, ViewModelFactory>();
-                    services.AddSingleton<IDataBaseService, DataBaseService>();
-                    services.AddSingleton<IMarkupReaderService, MarkupReaderService>();
-                    services.AddSingleton<ITableService, TableService>();
+                    services.AddScoped<IViewModelFactory, ViewModelFactory>();
+                    services.AddScoped<IDataBaseService, DataBaseService>();
+                    services.AddScoped<IMarkupReaderService, MarkupReaderService>();
+                    services.AddScoped<ITableService, TableService>();
+                    services.AddScoped<IWeatherService, WeatherService>();
+
+                    services.AddHttpClient("OpenMeteo",client => {
+                        client.BaseAddress = new Uri(hostContext.Configuration["OpenMeteo"]);
+                    });
+                    services.AddHttpClient("Geocoding", client => {
+                        client.BaseAddress = new Uri(hostContext.Configuration["Geocoding"]);
+                    });
+
                     services.AddSingleton<CreateViewModel<BaseHelperViewModel>>(services => () => services.GetRequiredService<BaseHelperViewModel>());
                     services.AddSingleton<CreateViewModel<XmlReaderViewModel>>(services => () => services.GetRequiredService<XmlReaderViewModel>());
+                    services.AddSingleton<CreateViewModel<WeatherViewModel>>(services => () => services.GetRequiredService<WeatherViewModel>());
 
-                   
                     services.AddSingleton<MainWindowView>(s => new MainWindowView(s.GetRequiredService<MainWindowViewModel>()));
+                })
+                .ConfigureLogging(logBuilder=>
+                {
+                    logBuilder.ClearProviders();
+                    logBuilder.SetMinimumLevel(LogLevel.Trace);
+                    logBuilder.AddNLog("NLog.config");
                 })
                 .Build();
         }

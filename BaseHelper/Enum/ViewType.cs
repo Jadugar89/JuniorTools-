@@ -10,6 +10,7 @@ namespace BaseHelper.Enum
         {
             BaseHelper,
             XmlReader,
+            Weather
         }
     
 }
